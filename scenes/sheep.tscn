@@ -1,0 +1,63 @@
+[gd_scene load_steps=9 format=3 uid="uid://cf2nv0n824ln4"]
+
+[ext_resource type="Texture2D" uid="uid://y8t7fl2h0thp" path="res://assets/Tiny Swords (Free Pack)/Decorations/Sheep/Sheep_Idle.png" id="1_t8l8v"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gw4f6"]
+atlas = ExtResource("1_t8l8v")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6qn06"]
+atlas = ExtResource("1_t8l8v")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_55m3e"]
+atlas = ExtResource("1_t8l8v")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n54i3"]
+atlas = ExtResource("1_t8l8v")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vrdyb"]
+atlas = ExtResource("1_t8l8v")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vbo3h"]
+atlas = ExtResource("1_t8l8v")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7b4xn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gw4f6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6qn06")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_55m3e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n54i3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vrdyb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vbo3h")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 10.0
+}]
+
+[node name="Sheep" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_7b4xn")
+animation = &"idle"
+autoplay = "idle"
+frame = 5
+frame_progress = 0.0833301
+flip_h = true

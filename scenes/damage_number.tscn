@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://cbc5vqtvg0pvx"]
+
+[ext_resource type="Script" uid="uid://blgtj447a16ow" path="res://scripts/damage_number.gd" id="1_aie4f"]
+
+[sub_resource type="SystemFont" id="SystemFont_idkk3"]
+subpixel_positioning = 0
+
+[node name="DamageNumber" type="Node2D"]
+script = ExtResource("1_aie4f")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.5
+offset_top = -14.0
+offset_right = 20.5
+offset_bottom = 14.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = SubResource("SystemFont_idkk3")
+theme_override_font_sizes/font_size = 20
+text = "face"
+horizontal_alignment = 1
+vertical_alignment = 1

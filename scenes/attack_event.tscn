@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://gtet784u4ade"]
+
+[ext_resource type="Script" uid="uid://c8ot267ynmw7o" path="res://scripts/attack_event.gd" id="1_t2hdm"]
+
+[node name="AttackEvent" type="Node"]
+script = ExtResource("1_t2hdm")

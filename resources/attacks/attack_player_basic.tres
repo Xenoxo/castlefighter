@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Attack" load_steps=2 format=3 uid="uid://cyico43yudxd1"]
+
+[ext_resource type="Script" uid="uid://dxq2v5geyhpss" path="res://resources/attack.gd" id="1_bw86j"]
+
+[resource]
+script = ExtResource("1_bw86j")
+damage = 35
+knockback_force = 0.0
+damage_type = "Slash"
+metadata/_custom_type_script = "uid://dxq2v5geyhpss"

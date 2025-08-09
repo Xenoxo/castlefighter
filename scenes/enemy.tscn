@@ -1,0 +1,82 @@
+[gd_scene load_steps=14 format=3 uid="uid://ccmk3lfj3dwea"]
+
+[ext_resource type="Script" uid="uid://dovutsnmsojvj" path="res://scripts/enemy.gd" id="1_md0e3"]
+[ext_resource type="Shader" uid="uid://mnh06s0ng78c" path="res://resources/take_damage.gdshader" id="2_c4w8v"]
+[ext_resource type="Script" uid="uid://c4b5tl6j4p434" path="res://scripts/health_component.gd" id="3_4ra3w"]
+[ext_resource type="SpriteFrames" uid="uid://duman7r36auj" path="res://resources/enemy_sprites.tres" id="3_xwavj"]
+[ext_resource type="Script" uid="uid://j0d6s6l6c78o" path="res://scripts/hurtbox_component.gd" id="4_5uy6h"]
+[ext_resource type="Script" uid="uid://rjshmier8a7o" path="res://scripts/mouse_handler_component.gd" id="6_xwavj"]
+[ext_resource type="Script" uid="uid://bb0t2ovl7wifo" path="res://addons/beehave/nodes/beehave_tree.gd" id="7_nenq2"]
+[ext_resource type="Script" uid="uid://cg016dbe7gs1x" path="res://addons/beehave/nodes/composites/sequence.gd" id="8_ipns3"]
+[ext_resource type="Script" uid="uid://dyf2wlqlypagt" path="res://scripts/condition_leaf.gd" id="9_8qclf"]
+[ext_resource type="Script" uid="uid://dsf28xucvhnl5" path="res://scripts/action_leaf.gd" id="10_8qclf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_md0e3"]
+size = Vector2(40, 62)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xwavj"]
+shader = ExtResource("2_c4w8v")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_modifier = 0.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xwavj"]
+size = Vector2(37, 58)
+
+[node name="Enemy" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_md0e3")
+
+[node name="PhysicsCollider" type="CollisionShape2D" parent="."]
+position = Vector2(1, 3)
+shape = SubResource("RectangleShape2D_md0e3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_xwavj")
+sprite_frames = ExtResource("3_xwavj")
+animation = &"idle"
+flip_h = true
+
+[node name="HealthComponent" type="Node2D" parent="."]
+script = ExtResource("3_4ra3w")
+
+[node name="HurtboxComponent" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 4
+script = ExtResource("4_5uy6h")
+metadata/_custom_type_script = "uid://j0d6s6l6c78o"
+
+[node name="HurtboxCollider" type="CollisionShape2D" parent="HurtboxComponent"]
+visible = false
+position = Vector2(1, -1)
+shape = SubResource("RectangleShape2D_md0e3")
+
+[node name="MouseHandlerComponent" type="Area2D" parent="."]
+script = ExtResource("6_xwavj")
+
+[node name="MouseCollider" type="CollisionShape2D" parent="MouseHandlerComponent"]
+visible = false
+position = Vector2(2.5, -3)
+shape = SubResource("RectangleShape2D_xwavj")
+
+[node name="BeehaveTree" type="Node" parent="." node_paths=PackedStringArray("blackboard", "actor")]
+script = ExtResource("7_nenq2")
+blackboard = NodePath("@Node@21801")
+actor = NodePath("..")
+metadata/_custom_type_script = "uid://bb0t2ovl7wifo"
+
+[node name="SequenceComposite" type="Node" parent="BeehaveTree"]
+script = ExtResource("8_ipns3")
+metadata/_custom_type_script = "uid://cg016dbe7gs1x"
+
+[node name="ConditionLeaf" type="Node" parent="BeehaveTree/SequenceComposite"]
+script = ExtResource("9_8qclf")
+metadata/_custom_type_script = "uid://cbnbvj8prv63i"
+
+[node name="ActionLeaf" type="Node" parent="BeehaveTree/SequenceComposite"]
+script = ExtResource("10_8qclf")
+metadata/_custom_type_script = "uid://cv74jjdrwevpr"
+
+[connection signal="area_entered" from="HurtboxComponent" to="HurtboxComponent" method="_on_area_entered"]
+[connection signal="mouse_entered" from="HurtboxComponent" to="." method="_on_hurtbox_component_mouse_entered"]
+[connection signal="mouse_exited" from="HurtboxComponent" to="." method="_on_hurtbox_component_mouse_exited"]

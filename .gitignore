@@ -1,0 +1,25 @@
+# Godot 4+ specific ignores
+.godot/
+
+# Mac OS generated files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows generated files
+# Thumbnails
+Thumbs.db
+# Recycle bin
+$RECYCLE.BIN/
+
+# Godot-specific exports
+# This assumes your exports are in a folder named "builds" or "exports"
+# If you export to the root folder, you might need to specify the export
+# preset file names here instead.
+builds/
+exports/
+
+# Mono/.NET specific ignores
+.mono/
+bin/
+obj/
