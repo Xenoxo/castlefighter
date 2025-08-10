@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b48maps0fwka0"]
+[gd_scene load_steps=15 format=3 uid="uid://b48maps0fwka0"]
 
 [ext_resource type="Script" uid="uid://bm210b1bjo5nk" path="res://scripts/player.gd" id="1_dqkch"]
 [ext_resource type="SpriteFrames" uid="uid://bbyv1ovjnn81t" path="res://resources/player_sprites.tres" id="2_qlg0r"]
@@ -10,8 +10,12 @@
 [ext_resource type="Script" uid="uid://c8nb328hljwdr" path="res://scripts/run.gd" id="8_smehm"]
 [ext_resource type="Script" uid="uid://c4b5tl6j4p434" path="res://scripts/health_component.gd" id="8_ur7pv"]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y4r1p"]
+radius = 23.0
+height = 70.0
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_g2els"]
-radius = 16.0312
+radius = 19.0
 
 [sub_resource type="GDScript" id="GDScript_smehm"]
 script/source = "extends Node
@@ -43,7 +47,11 @@ func exit(next_state):
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fjrip"]
 size = Vector2(53, 73)
 
-[node name="PlayerCharacter" type="CharacterBody2D"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ur7pv"]
+radius = 17.0
+height = 54.0
+
+[node name="PlayerCharacter" type="CharacterBody2D" groups=["player"]]
 collision_mask = 2
 script = ExtResource("1_dqkch")
 
@@ -51,6 +59,14 @@ script = ExtResource("1_dqkch")
 sprite_frames = ExtResource("2_qlg0r")
 animation = &"attack"
 autoplay = "idle"
+
+[node name="PickupArea" type="Area2D" parent="." groups=["player_pickup_area"]]
+collision_layer = 16
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
+position = Vector2(-1, -2)
+shape = SubResource("CapsuleShape2D_y4r1p")
 
 [node name="PhysicsCollider" type="CollisionShape2D" parent="."]
 position = Vector2(0, 8)
@@ -82,14 +98,15 @@ shape = SubResource("RectangleShape2D_fjrip")
 disabled = true
 
 [node name="HurtboxComponent" type="Area2D" parent="."]
-collision_layer = 9
-collision_mask = 6
+collision_layer = 8
+collision_mask = 4
 script = ExtResource("7_smehm")
 metadata/_custom_type_script = "uid://j0d6s6l6c78o"
 
 [node name="HurtboxCollider" type="CollisionShape2D" parent="HurtboxComponent"]
-position = Vector2(0, 8)
-shape = SubResource("CircleShape2D_g2els")
+visible = false
+position = Vector2(-2, 0)
+shape = SubResource("CapsuleShape2D_ur7pv")
 
 [node name="HealthComponent" type="Node2D" parent="."]
 script = ExtResource("8_ur7pv")

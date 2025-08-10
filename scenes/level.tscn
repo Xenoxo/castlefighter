@@ -44,7 +44,7 @@ tile_set = ExtResource("1_2q6dc")
 position = Vector2(703, 298)
 texture = ExtResource("6_b121j")
 
-[node name="CharacterBody2D" parent="." instance=ExtResource("3_w8frs")]
+[node name="Player" parent="." instance=ExtResource("3_w8frs")]
 z_index = 1
 position = Vector2(231, 221)
 
@@ -52,7 +52,7 @@ position = Vector2(231, 221)
 position = Vector2(1006, 481)
 
 [node name="Sheep2" parent="." instance=ExtResource("7_klq6b")]
-position = Vector2(892, 546)
+position = Vector2(958, 504)
 
 [node name="Sheep3" parent="." instance=ExtResource("7_klq6b")]
 position = Vector2(705, 262)
@@ -64,4 +64,4 @@ position = Vector2(320, 218)
 position = Vector2(415, 327)
 
 [node name="Enemy3" parent="." instance=ExtResource("6_2r41h")]
-position = Vector2(519, 248)
+position = Vector2(503, 324)

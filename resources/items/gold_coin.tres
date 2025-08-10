@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://cftsj31256iud"]
+
+[ext_resource type="SpriteFrames" uid="uid://bs821owr60n7n" path="res://resources/gold_coin.tres" id="1_1cdtf"]
+[ext_resource type="PackedScene" uid="uid://dty5injrsuh1j" path="res://scenes/pickup.tscn" id="1_fvnps"]
+[ext_resource type="Script" uid="uid://c1y41ntsfn6wh" path="res://resources/item_data.gd" id="1_lmieo"]
+
+[resource]
+script = ExtResource("1_lmieo")
+item_name = "Item"
+pickup_scene = ExtResource("1_fvnps")
+animation_frames = ExtResource("1_1cdtf")
+scale = 2.0
+metadata/_custom_type_script = "uid://c1y41ntsfn6wh"

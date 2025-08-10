@@ -2,6 +2,8 @@ extends Node2D
 class_name HealthComponent
 
 @export var MAX_HEALTH := 100.0
+signal died
+
 var health : float 
 
 func _ready() -> void:
@@ -10,5 +12,4 @@ func _ready() -> void:
 func damage(attack: int):
 	health -= attack
 	if health <= 0:
-		if get_parent().has_method("die"):
-			get_parent().die()
+		died.emit()
