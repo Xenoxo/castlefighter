@@ -97,10 +97,6 @@ position = Vector2(45.5, 6.5)
 shape = SubResource("RectangleShape2D_fjrip")
 disabled = true
 
-[node name="HealthComponent" type="Node2D" parent="."]
-script = ExtResource("8_ur7pv")
-metadata/_custom_type_script = "uid://c4b5tl6j4p434"
-
 [node name="HurtboxComponent" type="Area2D" parent="."]
 collision_layer = 8
 collision_mask = 4
@@ -108,5 +104,10 @@ script = ExtResource("7_smehm")
 metadata/_custom_type_script = "uid://j0d6s6l6c78o"
 
 [node name="HurtboxCollider" type="CollisionShape2D" parent="HurtboxComponent"]
+visible = false
 position = Vector2(-2, 0)
 shape = SubResource("CapsuleShape2D_ur7pv")
+
+[node name="HealthComponent" type="Node2D" parent="."]
+script = ExtResource("8_ur7pv")
+metadata/_custom_type_script = "uid://c4b5tl6j4p434"

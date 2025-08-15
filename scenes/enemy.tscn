@@ -64,7 +64,7 @@ shape = SubResource("RectangleShape2D_xwavj")
 [node name="BeehaveTree" type="Node" parent="." node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("7_nenq2")
 enabled = false
-blackboard = NodePath("@Node@23151")
+blackboard = NodePath("@Node@21814")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://bb0t2ovl7wifo"
 
