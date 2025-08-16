@@ -1,8 +1,8 @@
 [gd_resource type="SpriteFrames" load_steps=22 format=3 uid="uid://bbyv1ovjnn81t"]
 
-[ext_resource type="Texture2D" uid="uid://dytmkcsv5qa5t" path="res://assets/Tiny Swords (Free Pack)/Units/Red Units/Warrior/Warrior_Attack1.png" id="1_h24x7"]
-[ext_resource type="Texture2D" uid="uid://bpfuyl5umyag0" path="res://assets/Tiny Swords (Free Pack)/Units/Red Units/Warrior/Warrior_Idle.png" id="2_s7crl"]
-[ext_resource type="Texture2D" uid="uid://cfavovukfphgx" path="res://assets/Tiny Swords (Free Pack)/Units/Red Units/Warrior/Warrior_Run.png" id="3_vyj2k"]
+[ext_resource type="Texture2D" uid="uid://dytmkcsv5qa5t" path="res://assets/Tiny Swords/Units/Red Units/Warrior/Warrior_Attack1.png" id="1_h24x7"]
+[ext_resource type="Texture2D" uid="uid://bpfuyl5umyag0" path="res://assets/Tiny Swords/Units/Red Units/Warrior/Warrior_Idle.png" id="2_s7crl"]
+[ext_resource type="Texture2D" uid="uid://cfavovukfphgx" path="res://assets/Tiny Swords/Units/Red Units/Warrior/Warrior_Run.png" id="3_vyj2k"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y4r1p"]
 atlas = ExtResource("1_h24x7")

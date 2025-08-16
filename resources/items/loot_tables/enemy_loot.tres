@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="LootTable" load_steps=5 format=3 uid="uid://mdv1hnq1x5pj"]
 
-[ext_resource type="Script" uid="uid://dcvhkqoun2gnw" path="res://resources/loot_drop_item.gd" id="1_13sva"]
-[ext_resource type="Script" uid="uid://cenob6cuhbv2n" path="res://resources/loot_table.gd" id="1_sohsx"]
-[ext_resource type="Resource" uid="uid://cftsj31256iud" path="res://resources/items/gold_coin.tres" id="2_avcb5"]
+[ext_resource type="Script" uid="uid://dcvhkqoun2gnw" path="res://scripts/items/loot_drop_item.gd" id="1_13sva"]
+[ext_resource type="Script" uid="uid://cenob6cuhbv2n" path="res://scripts/items/loot_table.gd" id="1_sohsx"]
+[ext_resource type="Resource" uid="uid://cftsj31256iud" path="res://resources/items/item_data/gold_coin.tres" id="2_avcb5"]
 
 [sub_resource type="Resource" id="Resource_un6ws"]
 script = ExtResource("1_13sva")

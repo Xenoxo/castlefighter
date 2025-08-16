@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://cf2nv0n824ln4"]
 
-[ext_resource type="Texture2D" uid="uid://y8t7fl2h0thp" path="res://assets/Tiny Swords (Free Pack)/Decorations/Sheep/Sheep_Idle.png" id="1_t8l8v"]
+[ext_resource type="Texture2D" uid="uid://y8t7fl2h0thp" path="res://assets/Tiny Swords/Decorations/Sheep/Sheep_Idle.png" id="1_t8l8v"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gw4f6"]
 atlas = ExtResource("1_t8l8v")
@@ -60,4 +60,3 @@ animation = &"idle"
 autoplay = "idle"
 frame = 5
 frame_progress = 0.0833301
-flip_h = true
