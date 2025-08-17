@@ -46,8 +46,8 @@ func set_facing_direction(input_direction: Vector2):
 
 func handle_player_input():
 	var input_direction: Vector2 = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	set_facing_direction(input_direction)
 	if !is_animation_still_playing("attack"):
+		set_facing_direction(input_direction)
 		if Input.is_action_pressed("action"):
 	#		animated_sprite_2d.flip_h = facing_direction
 			if facing_left:

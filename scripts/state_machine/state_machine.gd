@@ -5,7 +5,6 @@ class_name StateMachine
 var current_state: Object
 var parent_player: PlayerCharacter
 
-
 var history = []
 var states = {}
 

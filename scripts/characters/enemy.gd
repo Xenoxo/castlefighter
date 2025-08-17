@@ -1,33 +1,56 @@
 
 extends CharacterBody2D
 class_name EnemyClass
-
 @onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+@onready var attack_range: AttackRange = $AttackRange
 
 @export var loot_table: LootTable
 
-@export var flip_direction: bool = false
+@export var flip_direction: bool = true
 
 var is_pickupable: bool = false
-
+var is_player_in_atk_range: bool = false
 var damage_number_scene = preload("res://scenes/damage_number.tscn")
 
 func _ready() -> void:
 	# Connects take_damage(...) method to the "hit" signal inside the hurtbox component
 	hurtbox_component.hit.connect(take_damage)
 	health_component.died.connect(die)
+	attack_range.entered_attack_range.connect(update_is_player_in_atk_range)
 	
 	if animated_sprite_2d.material:
 		animated_sprite_2d.material = animated_sprite_2d.material.duplicate()	
 	
 	# begins playing idle animation on a randomized frame
-	animated_sprite_2d.play("idle")
+	#idle()
 	var random_frame = randi_range(0, animated_sprite_2d.sprite_frames.get_frame_count("idle"))
 	animated_sprite_2d.set_frame_and_progress(random_frame, randf())
 	animated_sprite_2d.flip_h = flip_direction
+
+func update_is_player_in_atk_range(in_range: bool):
+	is_player_in_atk_range = in_range
+	#print(is_player_in_atk_range)
 	
+	### temp code
+	#if is_player_in_atk_range:
+		#attack()
+
+## FUTURE STATE MACHINE
+func idle():
+	animated_sprite_2d.play("idle")
+func defense():
+	animated_sprite_2d.play("defense")
+func attack():
+	print("I'm attacking!")
+	#animated_sprite_2d.play("defense")
+	animated_sprite_2d.play("attack")
+
+func is_animation_still_playing(animation_name: String):
+	return animated_sprite_2d.animation == animation_name && animated_sprite_2d.is_playing()
+	# emit signal when attack is done playing from animation
+	# this signal then ensures that SUCCESS triggers, else it's ongoing
 
 func _physics_process(delta: float) -> void:
 	if is_pickupable:

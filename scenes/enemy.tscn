@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://ccmk3lfj3dwea"]
+[gd_scene load_steps=20 format=3 uid="uid://ccmk3lfj3dwea"]
 
 [ext_resource type="Script" uid="uid://dovutsnmsojvj" path="res://scripts/characters/enemy.gd" id="1_md0e3"]
 [ext_resource type="Shader" uid="uid://mnh06s0ng78c" path="res://resources/take_damage.gdshader" id="2_c4w8v"]
@@ -6,11 +6,14 @@
 [ext_resource type="Script" uid="uid://c4b5tl6j4p434" path="res://scripts/components/health_component.gd" id="3_4ra3w"]
 [ext_resource type="SpriteFrames" uid="uid://duman7r36auj" path="res://resources/enemy_sprites.tres" id="3_xwavj"]
 [ext_resource type="Script" uid="uid://j0d6s6l6c78o" path="res://scripts/components/hurtbox_component.gd" id="4_5uy6h"]
+[ext_resource type="Script" uid="uid://d2n1lnfe0gaon" path="res://scripts/characters/Enemy/attack_range.gd" id="6_otmr2"]
 [ext_resource type="Script" uid="uid://rjshmier8a7o" path="res://scripts/components/mouse_handler_component.gd" id="6_xwavj"]
 [ext_resource type="Script" uid="uid://bb0t2ovl7wifo" path="res://addons/beehave/nodes/beehave_tree.gd" id="7_nenq2"]
 [ext_resource type="Script" uid="uid://cg016dbe7gs1x" path="res://addons/beehave/nodes/composites/sequence.gd" id="8_ipns3"]
 [ext_resource type="Script" uid="uid://dyf2wlqlypagt" path="res://scripts/ai/condition_leaf.gd" id="9_8qclf"]
-[ext_resource type="Script" uid="uid://dsf28xucvhnl5" path="res://scripts/ai/action_leaf.gd" id="10_8qclf"]
+[ext_resource type="Script" uid="uid://dsf28xucvhnl5" path="res://scripts/ai/action_attack.gd" id="10_8qclf"]
+[ext_resource type="Script" uid="uid://8hn4kne15ac5" path="res://addons/beehave/nodes/composites/selector.gd" id="10_j0cyh"]
+[ext_resource type="Script" uid="uid://brlvugg1yt315" path="res://scripts/ai/action_idle.gd" id="13_wtq4b"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_w8i8w"]
 radius = 14.0
@@ -20,6 +23,9 @@ height = 36.0
 shader = ExtResource("2_c4w8v")
 shader_parameter/flash_color = Color(1, 1, 1, 1)
 shader_parameter/flash_modifier = 0.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_w8i8w"]
+radius = 128.016
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_md0e3"]
 size = Vector2(43, 69)
@@ -36,19 +42,31 @@ script = ExtResource("1_md0e3")
 loot_table = ExtResource("2_w8i8w")
 
 [node name="PhysicsCollider" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, 22)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_w8i8w")
 
 [node name="HealthComponent" type="Node2D" parent="."]
+visible = false
 script = ExtResource("3_4ra3w")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_xwavj")
 sprite_frames = ExtResource("3_xwavj")
-animation = &"idle"
+animation = &"attack"
+frame = 2
+frame_progress = 1.0
+
+[node name="AttackRange" type="Area2D" parent="."]
+visible = false
+script = ExtResource("6_otmr2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange"]
+shape = SubResource("CircleShape2D_w8i8w")
 
 [node name="HurtboxComponent" type="Area2D" parent="."]
+visible = false
 collision_layer = 8
 collision_mask = 4
 script = ExtResource("4_5uy6h")
@@ -70,23 +88,32 @@ disabled = true
 
 [node name="BeehaveTree" type="Node" parent="." node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("7_nenq2")
-enabled = false
-blackboard = NodePath("@Node@80549")
+blackboard = NodePath("@Node@182866")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://bb0t2ovl7wifo"
 
-[node name="SequenceComposite" type="Node" parent="BeehaveTree"]
+[node name="SelectorComposite" type="Node" parent="BeehaveTree"]
+script = ExtResource("10_j0cyh")
+metadata/_custom_type_script = "uid://8hn4kne15ac5"
+
+[node name="AttackSequence" type="Node" parent="BeehaveTree/SelectorComposite"]
 script = ExtResource("8_ipns3")
 metadata/_custom_type_script = "uid://cg016dbe7gs1x"
 
-[node name="ConditionLeaf" type="Node" parent="BeehaveTree/SequenceComposite"]
+[node name="IsPlayerInAttackRangeCondition" type="Node" parent="BeehaveTree/SelectorComposite/AttackSequence"]
 script = ExtResource("9_8qclf")
 metadata/_custom_type_script = "uid://cbnbvj8prv63i"
 
-[node name="ActionLeaf" type="Node" parent="BeehaveTree/SequenceComposite"]
+[node name="Attack" type="Node" parent="BeehaveTree/SelectorComposite/AttackSequence"]
 script = ExtResource("10_8qclf")
 metadata/_custom_type_script = "uid://cv74jjdrwevpr"
 
+[node name="Idle" type="Node" parent="BeehaveTree/SelectorComposite"]
+script = ExtResource("13_wtq4b")
+metadata/_custom_type_script = "uid://cv74jjdrwevpr"
+
+[connection signal="body_entered" from="AttackRange" to="AttackRange" method="_on_body_entered"]
+[connection signal="body_exited" from="AttackRange" to="AttackRange" method="_on_body_exited"]
 [connection signal="area_entered" from="HurtboxComponent" to="HurtboxComponent" method="_on_area_entered"]
 [connection signal="mouse_entered" from="HurtboxComponent" to="." method="_on_hurtbox_component_mouse_entered"]
 [connection signal="mouse_exited" from="HurtboxComponent" to="." method="_on_hurtbox_component_mouse_exited"]
