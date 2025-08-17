@@ -1,10 +1,8 @@
 class_name PlayerCharacter
 extends CharacterBody2D
 
-
 @onready var state_machine: StateMachine = $StateMachine
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
-#@onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 
 @onready var hitbox_collider: CollisionShape2D = $HitboxComponent/HitboxCollider
 @onready var hitbox_component: HitboxComponent = $HitboxComponent
@@ -21,7 +19,10 @@ var facing_left: bool = false
 func _ready() -> void:
 	screen_size = get_viewport_rect().size
 	state_machine.init(self)
-
+	
+	#for state in state_machine.get_children():
+		#state.animation_player = animated_sprite_2d
+		#print(state.name)
 	#var tween = create_tween()
 	
 	#tween.tween_property(animated_sprite_2d, "modulate", Color.RED, 1)

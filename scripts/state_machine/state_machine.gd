@@ -1,23 +1,20 @@
 extends Node
-# via https://gdscript.com/solutions/godot-state-machine/
 class_name StateMachine
+# via https://gdscript.com/solutions/godot-state-machine/
+## GOAL: a generic statemachine component
 
+# statemachine internals
 var current_state: Object
-var parent_player: PlayerCharacter
-
 var history = []
 var states = {}
 
 func _ready() -> void:
 	pass
 
-func init(player_node: CharacterBody2D) -> void:
-	parent_player = player_node
+func init(character_node: CharacterBody2D) -> void:
 	for state in get_children():
-		print(state.name)
 		state.fsm = self
-		if state.has_method("set_player_reference"):
-			state.set_player_reference(parent_player)
+		state.animation_player = character_node.animated_sprite_2d		
 		states[state.name] = state
 		if current_state:
 			remove_child(state)
@@ -27,10 +24,8 @@ func init(player_node: CharacterBody2D) -> void:
 
 
 func change_to(state_name):
-	#if current_state.name != "Attack" && parent_player.animated_sprite_2d.is_playing():
 	history.append(current_state.name)
 	set_state(state_name)
-
 
 func back():
 	if history.size() > 0:

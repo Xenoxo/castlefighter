@@ -5,6 +5,7 @@ class_name EnemyClass
 @onready var health_component: HealthComponent = $HealthComponent
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_range: AttackRange = $AttackRange
+@onready var state_machine: StateMachine = $StateMachine
 
 @export var loot_table: LootTable
 
@@ -14,37 +15,34 @@ var is_pickupable: bool = false
 var is_player_in_atk_range: bool = false
 var damage_number_scene = preload("res://scenes/damage_number.tscn")
 
+# NOTE: refactor ready func more?
 func _ready() -> void:
-	# Connects take_damage(...) method to the "hit" signal inside the hurtbox component
+	state_machine.init(self)
+	
 	hurtbox_component.hit.connect(take_damage)
 	health_component.died.connect(die)
 	attack_range.entered_attack_range.connect(update_is_player_in_atk_range)
 	
+	# logic to make the onhit flash unique to each instantiation
 	if animated_sprite_2d.material:
 		animated_sprite_2d.material = animated_sprite_2d.material.duplicate()	
 	
 	# begins playing idle animation on a randomized frame
-	#idle()
 	var random_frame = randi_range(0, animated_sprite_2d.sprite_frames.get_frame_count("idle"))
 	animated_sprite_2d.set_frame_and_progress(random_frame, randf())
 	animated_sprite_2d.flip_h = flip_direction
 
+
 func update_is_player_in_atk_range(in_range: bool):
 	is_player_in_atk_range = in_range
-	#print(is_player_in_atk_range)
-	
-	### temp code
-	#if is_player_in_atk_range:
-		#attack()
+
 
 ## FUTURE STATE MACHINE
-func idle():
-	animated_sprite_2d.play("idle")
+#func idle():
+	#animated_sprite_2d.play("idle")
 func defense():
 	animated_sprite_2d.play("defense")
 func attack():
-	print("I'm attacking!")
-	#animated_sprite_2d.play("defense")
 	animated_sprite_2d.play("attack")
 
 func is_animation_still_playing(animation_name: String):
