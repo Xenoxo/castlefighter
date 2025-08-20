@@ -1,11 +1,12 @@
-
-extends CharacterBody2D
+extends BaseCharacter
 class_name EnemyClass
+
 @onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
 @onready var health_component: HealthComponent = $HealthComponent
-@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+#@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_range: AttackRange = $AttackRange
 @onready var state_machine: StateMachine = $StateMachine
+@onready var hitbox_collider: CollisionShape2D = $HitboxComponent/HitboxCollider
 
 @export var loot_table: LootTable
 
@@ -19,6 +20,11 @@ var damage_number_scene = preload("res://scenes/damage_number.tscn")
 func _ready() -> void:
 	state_machine.init(self)
 	
+	print(state_machine.get_state("Attack").name)
+	if state_machine:
+		var attack_state: AttackState = state_machine.get_state("Attack")
+		attack_state.on_enter = enemy_attack_logic # dependency injection
+	
 	hurtbox_component.hit.connect(take_damage)
 	health_component.died.connect(die)
 	attack_range.entered_attack_range.connect(update_is_player_in_atk_range)
@@ -30,20 +36,22 @@ func _ready() -> void:
 	# begins playing idle animation on a randomized frame
 	var random_frame = randi_range(0, animated_sprite_2d.sprite_frames.get_frame_count("idle"))
 	animated_sprite_2d.set_frame_and_progress(random_frame, randf())
-	animated_sprite_2d.flip_h = flip_direction
+	
+	## NOTE: hard coding facing left
+	# eventually roll this into behavior tree
+	set_facing_direction(Vector2.LEFT)
 
+
+## custom enemy attack logic goes here
+func enemy_attack_logic():
+	if animated_sprite_2d.frame == 0:
+		hitbox_collider.disabled = false
+	else:
+		hitbox_collider.disabled = true
 
 func update_is_player_in_atk_range(in_range: bool):
 	is_player_in_atk_range = in_range
 
-
-## FUTURE STATE MACHINE
-#func idle():
-	#animated_sprite_2d.play("idle")
-func defense():
-	animated_sprite_2d.play("defense")
-func attack():
-	animated_sprite_2d.play("attack")
 
 func is_animation_still_playing(animation_name: String):
 	return animated_sprite_2d.animation == animation_name && animated_sprite_2d.is_playing()

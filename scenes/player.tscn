@@ -32,8 +32,9 @@ script = ExtResource("1_dqkch")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2_qlg0r")
-animation = &"run"
+animation = &"attack"
 autoplay = "idle"
+frame = 3
 
 [node name="PickupArea" type="Area2D" parent="." groups=["player_pickup_area"]]
 collision_layer = 16

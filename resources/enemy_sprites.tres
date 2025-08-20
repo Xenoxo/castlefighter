@@ -5,15 +5,15 @@
 [ext_resource type="Texture2D" uid="uid://buvku0r0jajeb" path="res://assets/Tiny Swords/Units/Black Units/Lancer/Lancer_Right_Defence.png" id="2_6ysru"]
 [ext_resource type="Texture2D" uid="uid://b3jy8m2j5icsa" path="res://assets/Tiny Swords/Units/Black Units/Lancer/Lancer_Run.png" id="4_lvd8y"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_4xmks"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_5x2uf"]
 atlas = ExtResource("1_5x2uf")
 region = Rect2(0, 0, 320, 320)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ix024"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ysru"]
 atlas = ExtResource("1_5x2uf")
 region = Rect2(320, 0, 320, 320)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_pu2in"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_lvd8y"]
 atlas = ExtResource("1_5x2uf")
 region = Rect2(640, 0, 320, 320)
 
@@ -116,18 +116,18 @@ region = Rect2(1600, 0, 320, 320)
 [resource]
 animations = [{
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4xmks")
+"duration": 1.5,
+"texture": SubResource("AtlasTexture_5x2uf")
 }, {
-"duration": 3.0,
-"texture": SubResource("AtlasTexture_ix024")
+"duration": 1.5,
+"texture": SubResource("AtlasTexture_6ysru")
 }, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_pu2in")
+"duration": 1.5,
+"texture": SubResource("AtlasTexture_lvd8y")
 }],
 "loop": false,
 "name": &"attack",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,

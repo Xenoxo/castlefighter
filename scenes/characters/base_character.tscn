@@ -1,0 +1,72 @@
+[gd_scene load_steps=12 format=3 uid="uid://h45nv2suo03g"]
+
+[ext_resource type="Script" uid="uid://butf7dngv18nu" path="res://scripts/characters/base_character.gd" id="1_ykald"]
+[ext_resource type="Texture2D" uid="uid://d3gmv37afjj6p" path="res://assets/Tiny Swords/Units/Enemy Pack/Skull/Skull_Attack.png" id="2_qjn6u"]
+[ext_resource type="Script" uid="uid://bb8dr4ukmk0tj" path="res://scripts/components/hitbox_component.gd" id="3_svwev"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_svwev"]
+atlas = ExtResource("2_qjn6u")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g1bqe"]
+atlas = ExtResource("2_qjn6u")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6iehr"]
+atlas = ExtResource("2_qjn6u")
+region = Rect2(384, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ppsu"]
+atlas = ExtResource("2_qjn6u")
+region = Rect2(576, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kwcgt"]
+atlas = ExtResource("2_qjn6u")
+region = Rect2(768, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4fah4"]
+atlas = ExtResource("2_qjn6u")
+region = Rect2(960, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nhtwj"]
+atlas = ExtResource("2_qjn6u")
+region = Rect2(1152, 0, 192, 192)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xml04"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_svwev")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g1bqe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6iehr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8ppsu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kwcgt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4fah4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nhtwj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="BaseCharacter" type="CharacterBody2D"]
+script = ExtResource("1_ykald")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_xml04")
+
+[node name="HitboxComponent" type="Area2D" parent="."]
+script = ExtResource("3_svwev")
+metadata/_custom_type_script = "uid://bb8dr4ukmk0tj"
