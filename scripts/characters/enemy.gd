@@ -93,3 +93,13 @@ func spawn_loot():
 				get_parent().add_child(pickup_instance)
 				pickup_instance.global_position = global_position
 				pickup_instance.call_deferred("setup", item_data)
+				
+# NOTE: don't really understand how this all works, need to dig into shaders
+func damage_vfx():
+	var sprite_material = animated_sprite_2d.material as ShaderMaterial
+	
+	sprite_material.set_shader_parameter("flash_modifier", 2.0) #intensity of flash
+	var tween = create_tween()
+	
+	# how fast the effect fades
+	tween.tween_property(sprite_material, "shader_parameter/flash_modifier", 0.0, .2)
