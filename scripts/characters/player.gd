@@ -9,13 +9,12 @@ extends BaseCharacter
 
 @onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
 @onready var hurtbox_collider: CollisionShape2D = $HurtboxComponent/HurtboxCollider
-
-@export var speed: float = 100.0
 @export var ATTACK_DAMAGE = 5
 
 var screen_size: Vector2
 
 func _ready() -> void:
+	GameManager.player = self
 	screen_size = get_viewport_rect().size
 	state_machine.init(self)
 	

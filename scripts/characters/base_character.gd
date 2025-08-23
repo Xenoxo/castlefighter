@@ -3,6 +3,7 @@ class_name BaseCharacter
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var hitbox_component: HitboxComponent = $HitboxComponent
+@export var speed: float = 50.0
 
 #var facing_left: bool = false
 func set_facing_direction(direction: Vector2) -> void:

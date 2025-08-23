@@ -29,6 +29,7 @@ y_sort_enabled = true
 collision_mask = 2
 up_direction = Vector2(0, 1)
 script = ExtResource("1_dqkch")
+speed = 100.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("2_qlg0r")

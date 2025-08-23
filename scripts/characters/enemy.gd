@@ -9,11 +9,9 @@ class_name EnemyClass
 @onready var hitbox_collider: CollisionShape2D = $HitboxComponent/HitboxCollider
 
 @export var loot_table: LootTable
-
 @export var flip_direction: bool = true
 
 var damage_number_scene = preload("res://scenes/damage_number.tscn")
-
 var is_pickupable: bool = false
 var is_player_in_atk_range: bool = false
 
