@@ -9,6 +9,7 @@ func enter():
 		push_error("animation player not found")
 		return
 	animation_player.play("run")
+	print("run state")
 
 func exit(next_state):
 	animation_player.stop()

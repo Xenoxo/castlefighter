@@ -31,7 +31,6 @@ func back():
 	if history.size() > 0:
 		set_state(history.pop_back())
 
-
 func set_state(state_name):
 	remove_child(current_state)
 	current_state = states[state_name]

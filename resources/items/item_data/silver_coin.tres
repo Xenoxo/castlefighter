@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=4 format=3 uid="uid://dvdy7r5sipm66"]
+
+[ext_resource type="SpriteFrames" uid="uid://dypuaqydqlcux" path="res://resources/silver_coin.tres" id="1_13u0d"]
+[ext_resource type="PackedScene" uid="uid://dty5injrsuh1j" path="res://scenes/pickup_item.tscn" id="2_81icg"]
+[ext_resource type="Script" uid="uid://c1y41ntsfn6wh" path="res://scripts/items/item_data.gd" id="3_ybfer"]
+
+[resource]
+script = ExtResource("3_ybfer")
+item_name = "Item"
+pickup_scene = ExtResource("2_81icg")
+animation_frames = ExtResource("1_13u0d")
+scale = 2.0
+metadata/_custom_type_script = "uid://c1y41ntsfn6wh"

@@ -4,7 +4,6 @@
 [ext_resource type="Shader" uid="uid://mnh06s0ng78c" path="res://resources/take_damage.gdshader" id="2_c4w8v"]
 [ext_resource type="Resource" uid="uid://mdv1hnq1x5pj" path="res://resources/items/loot_tables/enemy_loot.tres" id="2_w8i8w"]
 [ext_resource type="Script" uid="uid://c4b5tl6j4p434" path="res://scripts/components/health_component.gd" id="3_4ra3w"]
-[ext_resource type="SpriteFrames" uid="uid://duman7r36auj" path="res://resources/enemy_sprites.tres" id="3_xwavj"]
 [ext_resource type="Script" uid="uid://j0d6s6l6c78o" path="res://scripts/components/hurtbox_component.gd" id="4_5uy6h"]
 [ext_resource type="Script" uid="uid://d2n1lnfe0gaon" path="res://scripts/characters/Enemy/attack_range.gd" id="6_otmr2"]
 [ext_resource type="Script" uid="uid://rjshmier8a7o" path="res://scripts/components/mouse_handler_component.gd" id="6_xwavj"]
@@ -24,6 +23,29 @@ shader = ExtResource("2_c4w8v")
 shader_parameter/flash_color = Color(1, 1, 1, 1)
 shader_parameter/flash_modifier = 0.0
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_xtffr"]
+animations = [{
+"frames": [],
+"loop": false,
+"name": &"attack",
+"speed": 10.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"defense",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"idle",
+"speed": 10.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"run",
+"speed": 10.0
+}]
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_w8i8w"]
 radius = 14.0
 height = 36.0
@@ -40,7 +62,7 @@ size = Vector2(37, 58)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_shcg2"]
 size = Vector2(33, 17)
 
-[node name="Enemy" type="CharacterBody2D"]
+[node name="Enemy_Spear" type="CharacterBody2D"]
 z_index = 1
 y_sort_enabled = true
 collision_layer = 2
@@ -50,10 +72,8 @@ loot_table = ExtResource("2_w8i8w")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_xwavj")
-sprite_frames = ExtResource("3_xwavj")
-animation = &"attack"
-frame = 2
-frame_progress = 1.0
+sprite_frames = SubResource("SpriteFrames_xtffr")
+animation = &"run"
 
 [node name="StateMachine" parent="." instance=ExtResource("15_g0wcc")]
 
@@ -103,7 +123,7 @@ disabled = true
 
 [node name="BeehaveTree" type="Node" parent="." node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("7_nenq2")
-blackboard = NodePath("@Node@21817")
+blackboard = NodePath("@Node@51059")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://bb0t2ovl7wifo"
 

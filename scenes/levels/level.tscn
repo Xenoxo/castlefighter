@@ -5,8 +5,8 @@
 [ext_resource type="TileSet" uid="uid://bomw3suvasrxt" path="res://resources/terrain_tiles.tres" id="3_xfk5q"]
 [ext_resource type="Texture2D" uid="uid://dclx46nc5x4n0" path="res://assets/Tiny Swords/Buildings/Blue Buildings/Tower.png" id="4_qogh7"]
 [ext_resource type="PackedScene" uid="uid://b48maps0fwka0" path="res://scenes/player.tscn" id="5_8iyoh"]
+[ext_resource type="PackedScene" uid="uid://ckbyb58743i06" path="res://scenes/characters/enemy_skeleton.tscn" id="6_icy5c"]
 [ext_resource type="PackedScene" uid="uid://cf2nv0n824ln4" path="res://scenes/sheep.tscn" id="6_mq31s"]
-[ext_resource type="PackedScene" uid="uid://ccmk3lfj3dwea" path="res://scenes/enemy.tscn" id="7_5mi6g"]
 [ext_resource type="Texture2D" uid="uid://b3fwti0lf71l7" path="res://assets/Tiny Swords Old (Update 010)/Factions/Knights/Buildings/House/House_Blue.png" id="9_qhnmj"]
 [ext_resource type="Texture2D" uid="uid://dgvttf7551uf0" path="res://assets/Tiny Swords Old (Update 010)/Factions/Goblins/Buildings/Wood_Tower/Wood_Tower_InConstruction.png" id="10_jyre1"]
 
@@ -50,8 +50,8 @@ anchor_mode = 0
 [node name="Player" parent="." instance=ExtResource("5_8iyoh")]
 position = Vector2(156, 280)
 
-[node name="Enemy" parent="." instance=ExtResource("7_5mi6g")]
-position = Vector2(466, 287)
+[node name="Enemy_Skeleton" parent="." instance=ExtResource("6_icy5c")]
+position = Vector2(435, 290)
 
 [node name="Sheep" parent="." instance=ExtResource("6_mq31s")]
 position = Vector2(1006, 481)

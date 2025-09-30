@@ -1,0 +1,139 @@
+[gd_scene load_steps=25 format=3 uid="uid://ckbyb58743i06"]
+
+[ext_resource type="Script" uid="uid://dovutsnmsojvj" path="res://scripts/characters/enemy.gd" id="1_qqrmu"]
+[ext_resource type="Resource" uid="uid://mdv1hnq1x5pj" path="res://resources/items/loot_tables/enemy_loot.tres" id="2_8aypj"]
+[ext_resource type="Shader" uid="uid://mnh06s0ng78c" path="res://resources/take_damage.gdshader" id="3_m01sv"]
+[ext_resource type="SpriteFrames" uid="uid://duman7r36auj" path="res://resources/enemy_sprites.tres" id="4_x484h"]
+[ext_resource type="PackedScene" uid="uid://boibe6gufrt7b" path="res://scenes/state_machine.tscn" id="5_stmnj"]
+[ext_resource type="Script" uid="uid://c4b5tl6j4p434" path="res://scripts/components/health_component.gd" id="6_ydsww"]
+[ext_resource type="Script" uid="uid://d2n1lnfe0gaon" path="res://scripts/characters/Enemy/attack_range.gd" id="7_fvwug"]
+[ext_resource type="Script" uid="uid://j0d6s6l6c78o" path="res://scripts/components/hurtbox_component.gd" id="8_lipm4"]
+[ext_resource type="Script" uid="uid://rjshmier8a7o" path="res://scripts/components/mouse_handler_component.gd" id="9_kdlsj"]
+[ext_resource type="Script" uid="uid://bb8dr4ukmk0tj" path="res://scripts/components/hitbox_component.gd" id="10_xcuf1"]
+[ext_resource type="Resource" uid="uid://cyico43yudxd1" path="res://resources/attacks/attack_player_basic.tres" id="11_egjtu"]
+[ext_resource type="Script" uid="uid://bb0t2ovl7wifo" path="res://addons/beehave/nodes/beehave_tree.gd" id="12_j4twg"]
+[ext_resource type="Script" uid="uid://cw22yurt5l74k" path="res://addons/beehave/nodes/composites/selector_reactive.gd" id="13_tequu"]
+[ext_resource type="Script" uid="uid://cg016dbe7gs1x" path="res://addons/beehave/nodes/composites/sequence.gd" id="14_jlaad"]
+[ext_resource type="Script" uid="uid://dyf2wlqlypagt" path="res://scripts/ai/condition_leaf.gd" id="15_8kcft"]
+[ext_resource type="Script" uid="uid://dsf28xucvhnl5" path="res://scripts/ai/action_attack.gd" id="16_yqcpn"]
+[ext_resource type="Script" uid="uid://g32i07piw6wb" path="res://scripts/ai/action_move_to_player.gd" id="17_8cq3e"]
+[ext_resource type="Script" uid="uid://brlvugg1yt315" path="res://scripts/ai/action_idle.gd" id="18_ltvtr"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xwavj"]
+shader = ExtResource("3_m01sv")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_modifier = 0.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_w8i8w"]
+radius = 14.0
+height = 36.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_w8i8w"]
+radius = 47.2652
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_md0e3"]
+size = Vector2(43, 69)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xwavj"]
+size = Vector2(37, 58)
+
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_qqrmu"]
+points = PackedVector2Array(26, -0.25, -9, -23.25, -7, 25.75)
+
+[node name="Enemy_Skeleton" type="CharacterBody2D"]
+z_index = 1
+y_sort_enabled = true
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_qqrmu")
+loot_table = ExtResource("2_8aypj")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_xwavj")
+sprite_frames = ExtResource("4_x484h")
+animation = &"attack"
+frame = 4
+
+[node name="StateMachine" parent="." instance=ExtResource("5_stmnj")]
+
+[node name="PhysicsCollider" type="CollisionShape2D" parent="."]
+position = Vector2(0, 22)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_w8i8w")
+
+[node name="HealthComponent" type="Node2D" parent="."]
+script = ExtResource("6_ydsww")
+
+[node name="AttackRange" type="Area2D" parent="."]
+script = ExtResource("7_fvwug")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange"]
+shape = SubResource("CircleShape2D_w8i8w")
+
+[node name="HurtboxComponent" type="Area2D" parent="."]
+visible = false
+collision_layer = 8
+collision_mask = 4
+script = ExtResource("8_lipm4")
+metadata/_custom_type_script = "uid://j0d6s6l6c78o"
+
+[node name="HurtboxCollider" type="CollisionShape2D" parent="HurtboxComponent"]
+position = Vector2(0.5, -2.5)
+shape = SubResource("RectangleShape2D_md0e3")
+
+[node name="MouseHandlerComponent" type="Area2D" parent="."]
+visible = false
+script = ExtResource("9_kdlsj")
+
+[node name="MouseCollider" type="CollisionShape2D" parent="MouseHandlerComponent"]
+position = Vector2(2.5, -3)
+shape = SubResource("RectangleShape2D_xwavj")
+disabled = true
+
+[node name="HitboxComponent" type="Area2D" parent="."]
+script = ExtResource("10_xcuf1")
+attack_data = ExtResource("11_egjtu")
+metadata/_custom_type_script = "uid://bb8dr4ukmk0tj"
+
+[node name="HitboxCollider" type="CollisionShape2D" parent="HitboxComponent"]
+position = Vector2(50, 5.25)
+shape = SubResource("ConvexPolygonShape2D_qqrmu")
+disabled = true
+
+[node name="BeehaveTree" type="Node" parent="." node_paths=PackedStringArray("blackboard", "actor")]
+script = ExtResource("12_j4twg")
+blackboard = NodePath("@Node@37873")
+actor = NodePath("..")
+metadata/_custom_type_script = "uid://bb0t2ovl7wifo"
+
+[node name="SelectorComposite" type="Node" parent="BeehaveTree"]
+script = ExtResource("13_tequu")
+metadata/_custom_type_script = "uid://cw22yurt5l74k"
+
+[node name="AttackSequence" type="Node" parent="BeehaveTree/SelectorComposite"]
+script = ExtResource("14_jlaad")
+metadata/_custom_type_script = "uid://cg016dbe7gs1x"
+
+[node name="IsPlayerInAttackRangeCondition" type="Node" parent="BeehaveTree/SelectorComposite/AttackSequence"]
+script = ExtResource("15_8kcft")
+metadata/_custom_type_script = "uid://cbnbvj8prv63i"
+
+[node name="Attack" type="Node" parent="BeehaveTree/SelectorComposite/AttackSequence"]
+script = ExtResource("16_yqcpn")
+metadata/_custom_type_script = "uid://cv74jjdrwevpr"
+
+[node name="MoveToPlayer" type="Node" parent="BeehaveTree/SelectorComposite"]
+script = ExtResource("17_8cq3e")
+metadata/_custom_type_script = "uid://cv74jjdrwevpr"
+
+[node name="Idle" type="Node" parent="BeehaveTree/SelectorComposite"]
+script = ExtResource("18_ltvtr")
+metadata/_custom_type_script = "uid://cv74jjdrwevpr"
+
+[connection signal="body_entered" from="AttackRange" to="AttackRange" method="_on_body_entered"]
+[connection signal="body_exited" from="AttackRange" to="AttackRange" method="_on_body_exited"]
+[connection signal="area_entered" from="HurtboxComponent" to="HurtboxComponent" method="_on_area_entered"]
+[connection signal="mouse_entered" from="HurtboxComponent" to="." method="_on_hurtbox_component_mouse_entered"]
+[connection signal="mouse_exited" from="HurtboxComponent" to="." method="_on_hurtbox_component_mouse_exited"]
+
+[editable path="StateMachine"]

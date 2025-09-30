@@ -56,7 +56,7 @@ func spawn_damage_numbers(damage: int):
 
 ## custom enemy attack logic goes here
 func enemy_attack_logic():
-	if animated_sprite_2d.frame == 0:
+	if animated_sprite_2d.frame == 2 or animated_sprite_2d.frame == 3:
 		hitbox_collider.disabled = false
 	else:
 		hitbox_collider.disabled = true
