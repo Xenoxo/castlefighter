@@ -1,5 +1,7 @@
 @tool
 extends Node2D
+# NOTE: Improvement ideas:
+# Currently bake_physics_layer is extermely brittle, requires exact id
 
 # --- CONFIGURE THIS ---
 # In the TileSet, find your single collidable water tile.
@@ -73,18 +75,19 @@ func _bake_physics_layer():
 	# 1. Clear the old physics layer completely
 	physics_layer.clear()
 	
-	# 2. Get all the cells that have water tiles
+	# 2. Get all the cells that have water, ground and edge tiles respectively
 	var water_cells = visual_water.get_used_cells()
 	var ground_cells = visual_ground.get_used_cells()
 	var edge_cells = visual_water_edge.get_used_cells()
-	
 	
 	# 3. For each water cell...
 	for cell in water_cells:
 		
 		# if there is NOT groung on top, returns null
 		if not visual_ground.get_cell_tile_data(cell) and not visual_water_edge.get_cell_tile_data(cell):
+		# if not visual_ground.get_cell_tile_data(cell):
 			physics_layer.set_cell(cell, collider_tile_source_id, collider_tile_atlas_coords)
+	
 	for cell in ground_cells:
 			#print(str(visual_ground.get_cell_tile_data(cell).terrain))
 			# NOTE: need to check for land tiles that have both nothing above and 
@@ -97,4 +100,5 @@ func _bake_physics_layer():
 				physics_layer.set_cell(cell_above)
 				print("actual cell: " + str(cell))
 				pass
+				
 	print("Physics layer baking complete.")

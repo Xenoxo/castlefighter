@@ -1,4 +1,3 @@
-
 	# if player is a thing
 	# get player's positino
 	# move and slide towards player in the direction
@@ -21,3 +20,6 @@ func tick(actor:Node, _blackboard:Blackboard) -> int:
 		enemy.state_machine.change_to("Run")
 		return RUNNING
 	return FAILURE
+
+# what I want is the enemy to move towards the player until it gets within the
+# radius of the attack range, after which I want to move up.
