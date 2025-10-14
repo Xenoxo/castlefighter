@@ -127,6 +127,7 @@ metadata/_custom_type_script = "uid://cv74jjdrwevpr"
 
 [node name="MoveToPlayer" type="Node" parent="BeehaveTree/SelectorComposite"]
 script = ExtResource("17_8cq3e")
+attack_range_node_path = NodePath("../../../AttackRange/CollisionShape2D")
 metadata/_custom_type_script = "uid://cv74jjdrwevpr"
 
 [node name="Idle" type="Node" parent="BeehaveTree/SelectorComposite"]

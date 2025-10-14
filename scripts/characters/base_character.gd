@@ -7,8 +7,8 @@ class_name BaseCharacter
 
 #var facing_left: bool = false
 func set_facing_direction(direction: Vector2) -> void:
-	if direction.x == 0.0:
-		return
+	#if direction.x == 0.0:
+		#return
 	animated_sprite_2d.flip_h = direction.x < 0.0
 	
 	if hitbox_component:

@@ -8,6 +8,6 @@ func tick(actor, _blackboard):
 			
 		var enemy: EnemyClass = actor
 		if enemy.is_player_in_atk_range or enemy.is_animation_still_playing("attack"):
-		#print(actor.name)
+			enemy.set_facing_direction(GameManager.player.position - enemy.position)
 			return SUCCESS  
 	return FAILURE

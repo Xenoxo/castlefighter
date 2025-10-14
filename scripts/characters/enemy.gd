@@ -8,6 +8,8 @@ class_name EnemyClass
 @onready var state_machine: StateMachine = $StateMachine
 @onready var hitbox_collider: CollisionShape2D = $HitboxComponent/HitboxCollider
 
+@onready var attack_range_shape: CollisionShape2D = $AttackRange/CollisionShape2D
+
 @export var loot_table: LootTable
 @export var flip_direction: bool = true
 

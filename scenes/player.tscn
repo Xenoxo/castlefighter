@@ -80,7 +80,6 @@ script = ExtResource("7_smehm")
 metadata/_custom_type_script = "uid://j0d6s6l6c78o"
 
 [node name="HurtboxCollider" type="CollisionShape2D" parent="HurtboxComponent"]
-position = Vector2(-2, 0)
 shape = SubResource("CapsuleShape2D_ur7pv")
 
 [editable path="StateMachine"]
