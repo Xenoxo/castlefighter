@@ -56,6 +56,9 @@ position = Vector2(435, 290)
 [node name="Sheep" parent="." instance=ExtResource("6_mq31s")]
 position = Vector2(1006, 481)
 
+[node name="Sheep4" parent="." instance=ExtResource("6_mq31s")]
+position = Vector2(1002, 602)
+
 [node name="Sheep2" parent="." instance=ExtResource("6_mq31s")]
 position = Vector2(893.99, 504)
 scale = Vector2(1.435, 1.435)
@@ -71,5 +74,5 @@ position = Vector2(894, 391)
 texture = ExtResource("9_qhnmj")
 
 [node name="WoodTowerInConstruction" type="Sprite2D" parent="TestAssets"]
-position = Vector2(980, 535)
+position = Vector2(979, 529)
 texture = ExtResource("10_jyre1")

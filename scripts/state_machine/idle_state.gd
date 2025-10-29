@@ -5,6 +5,7 @@ var fsm: StateMachine
 var animation_player: AnimatedSprite2D
 
 func enter():
+#	print("idle state")
 	if not animation_player:
 		push_error("animation player not found")
 		return
