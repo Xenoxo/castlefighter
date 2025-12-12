@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://h45nv2suo03g"]
+[gd_scene load_steps=13 format=3 uid="uid://h45nv2suo03g"]
 
 [ext_resource type="Script" uid="uid://butf7dngv18nu" path="res://scripts/characters/base_character.gd" id="1_ykald"]
 [ext_resource type="Texture2D" uid="uid://d3gmv37afjj6p" path="res://assets/Tiny Swords/Units/Enemy Pack/Skull/Skull_Attack.png" id="2_qjn6u"]
 [ext_resource type="Script" uid="uid://bb8dr4ukmk0tj" path="res://scripts/components/hitbox_component.gd" id="3_svwev"]
+[ext_resource type="Script" uid="uid://c4b5tl6j4p434" path="res://scripts/components/health_component.gd" id="4_g1bqe"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_svwev"]
 atlas = ExtResource("2_qjn6u")
@@ -70,3 +71,7 @@ sprite_frames = SubResource("SpriteFrames_xml04")
 [node name="HitboxComponent" type="Area2D" parent="."]
 script = ExtResource("3_svwev")
 metadata/_custom_type_script = "uid://bb8dr4ukmk0tj"
+
+[node name="HealthComponent" type="Node2D" parent="."]
+script = ExtResource("4_g1bqe")
+metadata/_custom_type_script = "uid://c4b5tl6j4p434"

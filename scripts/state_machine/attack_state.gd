@@ -4,6 +4,7 @@ class_name AttackState
 var fsm: StateMachine
 var animation_player: AnimatedSprite2D
 
+#allows binding of dependency injection
 var on_enter: Callable
 
 func enter():
@@ -11,6 +12,7 @@ func enter():
 		push_error("animation player not found")
 		return
 	animation_player.play("attack")
+	#print("in attack state")
 	if on_enter.is_valid():
 		on_enter.call()
 

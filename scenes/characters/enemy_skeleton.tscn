@@ -1,8 +1,8 @@
-[gd_scene load_steps=25 format=3 uid="uid://ckbyb58743i06"]
+[gd_scene load_steps=24 format=3 uid="uid://ckbyb58743i06"]
 
 [ext_resource type="Script" uid="uid://dovutsnmsojvj" path="res://scripts/characters/enemy.gd" id="1_qqrmu"]
 [ext_resource type="Resource" uid="uid://mdv1hnq1x5pj" path="res://resources/items/loot_tables/enemy_loot.tres" id="2_8aypj"]
-[ext_resource type="Shader" uid="uid://mnh06s0ng78c" path="res://resources/take_damage.gdshader" id="3_m01sv"]
+[ext_resource type="Material" uid="uid://byxigiui7p6es" path="res://resources/materials/enemy_skeleton.tres" id="3_qqrmu"]
 [ext_resource type="SpriteFrames" uid="uid://duman7r36auj" path="res://resources/enemy_sprites.tres" id="4_x484h"]
 [ext_resource type="PackedScene" uid="uid://boibe6gufrt7b" path="res://scenes/state_machine.tscn" id="5_stmnj"]
 [ext_resource type="Script" uid="uid://c4b5tl6j4p434" path="res://scripts/components/health_component.gd" id="6_ydsww"]
@@ -19,11 +19,6 @@
 [ext_resource type="Script" uid="uid://g32i07piw6wb" path="res://scripts/ai/action_move_to_player.gd" id="17_8cq3e"]
 [ext_resource type="Script" uid="uid://brlvugg1yt315" path="res://scripts/ai/action_idle.gd" id="18_ltvtr"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xwavj"]
-shader = ExtResource("3_m01sv")
-shader_parameter/flash_color = Color(1, 1, 1, 1)
-shader_parameter/flash_modifier = 0.0
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_w8i8w"]
 radius = 14.0
 height = 36.0
@@ -32,14 +27,14 @@ height = 36.0
 radius = 8.0
 height = 116.0
 
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_qqrmu"]
+points = PackedVector2Array(26, -0.25, -9, -23.25, -7, 25.75)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_md0e3"]
 size = Vector2(43, 69)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xwavj"]
 size = Vector2(37, 58)
-
-[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_qqrmu"]
-points = PackedVector2Array(26, -0.25, -9, -23.25, -7, 25.75)
 
 [node name="Enemy_Skeleton" type="CharacterBody2D"]
 z_index = 1
@@ -50,19 +45,23 @@ script = ExtResource("1_qqrmu")
 loot_table = ExtResource("2_8aypj")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-material = SubResource("ShaderMaterial_xwavj")
+material = ExtResource("3_qqrmu")
 sprite_frames = ExtResource("4_x484h")
 animation = &"attack"
 frame = 4
 
 [node name="StateMachine" parent="." instance=ExtResource("5_stmnj")]
 
+[node name="HealthComponent" type="Node2D" parent="."]
+script = ExtResource("6_ydsww")
+metadata/_custom_type_script = "uid://c4b5tl6j4p434"
+
 [node name="PhysicsCollider" type="CollisionShape2D" parent="."]
 position = Vector2(0, 22)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_w8i8w")
 
-[node name="HealthComponent" type="Node2D" parent="."]
+[node name="HealthComponentENEMY" type="Node2D" parent="."]
 script = ExtResource("6_ydsww")
 
 [node name="AttackRange" type="Area2D" parent="."]
@@ -73,8 +72,19 @@ position = Vector2(0, 5)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_qqrmu")
 
+[node name="HitboxComponent" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 8
+script = ExtResource("10_xcuf1")
+attack_data = ExtResource("11_egjtu")
+metadata/_custom_type_script = "uid://bb8dr4ukmk0tj"
+
+[node name="HitboxCollider" type="CollisionShape2D" parent="HitboxComponent"]
+position = Vector2(50, 5.25)
+shape = SubResource("ConvexPolygonShape2D_qqrmu")
+disabled = true
+
 [node name="HurtboxComponent" type="Area2D" parent="."]
-visible = false
 collision_layer = 8
 collision_mask = 4
 script = ExtResource("8_lipm4")
@@ -93,19 +103,9 @@ position = Vector2(2.5, -3)
 shape = SubResource("RectangleShape2D_xwavj")
 disabled = true
 
-[node name="HitboxComponent" type="Area2D" parent="."]
-script = ExtResource("10_xcuf1")
-attack_data = ExtResource("11_egjtu")
-metadata/_custom_type_script = "uid://bb8dr4ukmk0tj"
-
-[node name="HitboxCollider" type="CollisionShape2D" parent="HitboxComponent"]
-position = Vector2(50, 5.25)
-shape = SubResource("ConvexPolygonShape2D_qqrmu")
-disabled = true
-
 [node name="BeehaveTree" type="Node" parent="." node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("12_j4twg")
-blackboard = NodePath("@Node@21067")
+blackboard = NodePath("@Node@35957")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://bb0t2ovl7wifo"
 
@@ -137,7 +137,6 @@ metadata/_custom_type_script = "uid://cv74jjdrwevpr"
 
 [connection signal="body_entered" from="AttackRange" to="AttackRange" method="_on_body_entered"]
 [connection signal="body_exited" from="AttackRange" to="AttackRange" method="_on_body_exited"]
-[connection signal="area_entered" from="HurtboxComponent" to="HurtboxComponent" method="_on_area_entered"]
 [connection signal="mouse_entered" from="HurtboxComponent" to="." method="_on_hurtbox_component_mouse_entered"]
 [connection signal="mouse_exited" from="HurtboxComponent" to="." method="_on_hurtbox_component_mouse_exited"]
 

@@ -2,8 +2,7 @@ extends BaseCharacter
 class_name EnemyClass
 
 @onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
-@onready var health_component: HealthComponent = $HealthComponent
-#@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+
 @onready var attack_range: AttackRange = $AttackRange
 @onready var state_machine: StateMachine = $StateMachine
 @onready var hitbox_collider: CollisionShape2D = $HitboxComponent/HitboxCollider
@@ -20,14 +19,20 @@ var is_player_in_atk_range: bool = false
 # NOTE: refactor ready func more?
 func _ready() -> void:
 	state_machine.init(self)
+	super()
+	#print(state_machine.get_state("Attack").name)
+	if !state_machine:
+		print("State Machine INVALID")
+	if !health_component:
+		print("no health_component")
+	if !hurtbox_component:
+		print("hurtbox INVALID")
 	
-	print(state_machine.get_state("Attack").name)
-	if state_machine:
-		var attack_state: AttackState = state_machine.get_state("Attack")
-		attack_state.on_enter = enemy_attack_logic # dependency injection
-	
+	var attack_state: AttackState = state_machine.get_state("Attack")
+	attack_state.on_enter = enemy_attack_logic # dependency injection
 	hurtbox_component.hit.connect(on_hit)
-	health_component.died.connect(die)
+	
+	#health_component.died.connect(die)
 	attack_range.entered_attack_range.connect(update_is_player_in_atk_range)
 	
 	# logic to make the onhit flash unique to each instantiation
@@ -58,10 +63,18 @@ func spawn_damage_numbers(damage: int):
 
 ## custom enemy attack logic goes here
 func enemy_attack_logic():
+	#print("dependency injection")
 	if animated_sprite_2d.frame == 2 or animated_sprite_2d.frame == 3:
 		hitbox_collider.disabled = false
 	else:
 		hitbox_collider.disabled = true
+
+func handle_hitbox_collider():
+	if (animated_sprite_2d.frame == 2 or animated_sprite_2d.frame == 3) && is_animation_still_playing("attack"):
+		hitbox_collider.disabled = false
+	else:
+		hitbox_collider.disabled = true
+
 
 func update_is_player_in_atk_range(in_range: bool):
 	is_player_in_atk_range = in_range

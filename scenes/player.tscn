@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://b48maps0fwka0"]
+[gd_scene load_steps=14 format=3 uid="uid://b48maps0fwka0"]
 
 [ext_resource type="Script" uid="uid://bm210b1bjo5nk" path="res://scripts/characters/player.gd" id="1_dqkch"]
 [ext_resource type="SpriteFrames" uid="uid://bbyv1ovjnn81t" path="res://resources/player_sprites.tres" id="2_qlg0r"]
+[ext_resource type="Material" uid="uid://byxigiui7p6es" path="res://resources/materials/enemy_skeleton.tres" id="2_ur7pv"]
 [ext_resource type="PackedScene" uid="uid://boibe6gufrt7b" path="res://scenes/state_machine.tscn" id="3_fjrip"]
 [ext_resource type="Script" uid="uid://m83fbafn4e2c" path="res://scripts/state_machine/player_attack_state.gd" id="4_smehm"]
 [ext_resource type="Script" uid="uid://bb8dr4ukmk0tj" path="res://scripts/components/hitbox_component.gd" id="6_fjrip"]
@@ -32,12 +33,19 @@ script = ExtResource("1_dqkch")
 speed = 100.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = ExtResource("2_ur7pv")
 sprite_frames = ExtResource("2_qlg0r")
 animation = &"attack"
 autoplay = "idle"
 frame = 3
 
+[node name="StateMachine" parent="." instance=ExtResource("3_fjrip")]
+
+[node name="Attack" parent="StateMachine" index="2"]
+script = ExtResource("4_smehm")
+
 [node name="PickupArea" type="Area2D" parent="." groups=["player_pickup_area"]]
+visible = false
 collision_layer = 16
 collision_mask = 32
 
@@ -50,11 +58,6 @@ debug_color = Color(0.599721, 0.497622, 0, 0.42)
 position = Vector2(0, 22)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_d2wvv")
-
-[node name="StateMachine" parent="." instance=ExtResource("3_fjrip")]
-
-[node name="Attack" parent="StateMachine" index="2"]
-script = ExtResource("4_smehm")
 
 [node name="HitboxComponent" type="Area2D" parent="." node_paths=PackedStringArray("health_component")]
 collision_layer = 4
@@ -69,10 +72,6 @@ position = Vector2(45.5, 6.5)
 shape = SubResource("RectangleShape2D_fjrip")
 disabled = true
 
-[node name="HealthComponent" type="Node2D" parent="."]
-script = ExtResource("8_ur7pv")
-metadata/_custom_type_script = "uid://c4b5tl6j4p434"
-
 [node name="HurtboxComponent" type="Area2D" parent="."]
 collision_layer = 8
 collision_mask = 4
@@ -81,5 +80,9 @@ metadata/_custom_type_script = "uid://j0d6s6l6c78o"
 
 [node name="HurtboxCollider" type="CollisionShape2D" parent="HurtboxComponent"]
 shape = SubResource("CapsuleShape2D_ur7pv")
+
+[node name="HealthComponent" type="Node2D" parent="."]
+script = ExtResource("8_ur7pv")
+metadata/_custom_type_script = "uid://c4b5tl6j4p434"
 
 [editable path="StateMachine"]
