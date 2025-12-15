@@ -1,0 +1,125 @@
+[gd_scene load_steps=12 format=3 uid="uid://cfa3pokx8m7re"]
+
+[ext_resource type="PackedScene" uid="uid://h45nv2suo03g" path="res://scenes/characters/base_character.tscn" id="1_6prti"]
+[ext_resource type="Script" uid="uid://bm210b1bjo5nk" path="res://scripts/characters/player_character.gd" id="2_j376r"]
+[ext_resource type="PackedScene" uid="uid://boibe6gufrt7b" path="res://scenes/state_machine.tscn" id="3_h7c8y"]
+[ext_resource type="Texture2D" uid="uid://bpfuyl5umyag0" path="res://assets/Tiny Swords/Units/Red Units/Warrior/Warrior_Idle.png" id="3_hto64"]
+
+[sub_resource type="Animation" id="Animation_hfyxy"]
+resource_name = "Idle"
+length = 0.80001
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_hto64")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+
+[sub_resource type="Animation" id="Animation_hto64"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_hto64")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1dev2"]
+_data = {
+&"Idle": SubResource("Animation_hfyxy"),
+&"RESET": SubResource("Animation_hto64")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xfe5i"]
+radius = 17.0
+height = 54.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hfyxy"]
+size = Vector2(53, 73)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8ntiw"]
+radius = 31.0644
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3thud"]
+radius = 14.0
+height = 36.0
+
+[node name="PlayerCharacter" instance=ExtResource("1_6prti")]
+script = ExtResource("2_j376r")
+ATTACK_DAMAGE = 5
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("3_hto64")
+hframes = 8
+
+[node name="AnimationPlayer" parent="Sprite2D" index="0"]
+root_node = NodePath("..")
+libraries = {
+&"": SubResource("AnimationLibrary_1dev2")
+}
+autoplay = "Idle"
+
+[node name="HurtboxCollider" type="CollisionShape2D" parent="HurtboxComponent" index="0"]
+shape = SubResource("CapsuleShape2D_xfe5i")
+
+[node name="HitboxCollider" type="CollisionShape2D" parent="HitboxComponent" index="0"]
+position = Vector2(45.5, 6.5)
+shape = SubResource("RectangleShape2D_hfyxy")
+disabled = true
+
+[node name="StateMachine" parent="." index="4" instance=ExtResource("3_h7c8y")]
+
+[node name="PickupArea" type="Area2D" parent="." index="5" groups=["player_pickup_area"]]
+visible = false
+collision_layer = 16
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea" index="0"]
+position = Vector2(-1, -2)
+shape = SubResource("CircleShape2D_8ntiw")
+debug_color = Color(0.599721, 0.497622, 0, 0.42)
+
+[node name="PhysicsCollider" type="CollisionShape2D" parent="." index="6"]
+position = Vector2(0, 22)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_3thud")
+
+[editable path="StateMachine"]

@@ -2,22 +2,27 @@ class_name PlayerCharacter
 extends BaseCharacter
 
 @onready var state_machine: StateMachine = $StateMachine
-#@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+#@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D 
 
-@onready var hitbox_collider: CollisionShape2D = $HitboxComponent/HitboxCollider
-#@onready var hitbox_component: HitboxComponent = $HitboxComponent
+#@onready var hitbox_collider: CollisionShape2D = $HitboxComponent/HitboxCollider
+##@onready var hitbox_component: HitboxComponent = $HitboxComponent
+#
+#@onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
+#@onready var hurtbox_collider: CollisionShape2D = $HurtboxComponent/HurtboxCollider
 
-@onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
-
-@onready var hurtbox_collider: CollisionShape2D = $HurtboxComponent/HurtboxCollider
 @export var ATTACK_DAMAGE = 5
 
 
 var damage_number_scene = preload("res://scenes/damage_number.tscn")
 
 var screen_size: Vector2
-
+# TODO fix statemachine
+# TODO fix hurtbox_component
 func _ready() -> void:
+	super()
+	#print("Children of ", name, ":")
+	#for child in get_children():
+		#print("- ", child.name)
 	GameManager.player = self
 	screen_size = get_viewport_rect().size
 	state_machine.init(self)
@@ -47,20 +52,25 @@ func handle_player_input():
 	move_and_slide()
 		
 func handle_hitbox_collider():
-	if animated_sprite_2d.frame == 2 && is_animation_still_playing("attack"):
-		hitbox_collider.disabled = false
-	else:
-		hitbox_collider.disabled = true
+	pass
+	#if animated_sprite_2d.frame == 2 && is_animation_still_playing("attack"):
+		#hitbox_collider.disabled = false
+	#else:
+		#hitbox_collider.disabled = true
 		
 		
 func is_animation_still_playing(animation_name: String):
-	return animated_sprite_2d.animation == animation_name && animated_sprite_2d.is_playing()
+	#return animated_sprite_2d.animation == animation_name && animated_sprite_2d.is_playing()
+	return animation_player.current_animation == animation_name && animation_player.is_playing()
+
 
 ## for some reason all my actions are showing up as unhandled input
 #func _unhandled_key_input(event):
 	#print("unhandled key input detected "+ event.as_text())
 func damage_vfx():
-	var sprite_material = animated_sprite_2d.material as ShaderMaterial
+	## old
+	# var sprite_material = animated_sprite_2d.material as ShaderMaterial
+	var sprite_material = sprite_2d.material as ShaderMaterial
 	
 	sprite_material.set_shader_parameter("flash_modifier", 2.0) #intensity of flash
 	var tween = create_tween()

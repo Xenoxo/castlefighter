@@ -2,7 +2,7 @@ extends Node
 class_name IdleState
 
 var fsm: StateMachine
-var animation_player: AnimatedSprite2D
+var animation_player: AnimationPlayer
 
 func enter():
 #	print("idle state")

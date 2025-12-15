@@ -1,19 +1,13 @@
-[gd_scene load_steps=13 format=4 uid="uid://cd8it0p3ecekn"]
+[gd_scene load_steps=9 format=4 uid="uid://cd8it0p3ecekn"]
 
 [ext_resource type="Script" uid="uid://ds18piqo7c6q2" path="res://scripts/event_manager.gd" id="1_rmjfq"]
 [ext_resource type="Script" uid="uid://d25r26ym36sdp" path="res://scripts/tile_post_process.gd" id="2_7pb6i"]
 [ext_resource type="TileSet" uid="uid://bomw3suvasrxt" path="res://resources/terrain_tiles.tres" id="3_xfk5q"]
 [ext_resource type="Texture2D" uid="uid://dclx46nc5x4n0" path="res://assets/Tiny Swords/Buildings/Blue Buildings/Tower.png" id="4_qogh7"]
-[ext_resource type="PackedScene" uid="uid://b48maps0fwka0" path="res://scenes/player.tscn" id="5_8iyoh"]
-[ext_resource type="PackedScene" uid="uid://ckbyb58743i06" path="res://scenes/characters/enemy_skeleton.tscn" id="6_icy5c"]
+[ext_resource type="PackedScene" uid="uid://cfa3pokx8m7re" path="res://scenes/characters/player_character.tscn" id="5_ouxo3"]
 [ext_resource type="PackedScene" uid="uid://cf2nv0n824ln4" path="res://scenes/sheep.tscn" id="6_mq31s"]
 [ext_resource type="Texture2D" uid="uid://b3fwti0lf71l7" path="res://assets/Tiny Swords Old (Update 010)/Factions/Knights/Buildings/House/House_Blue.png" id="9_qhnmj"]
-[ext_resource type="Script" uid="uid://db4ugjeam67kq" path="res://scenes/levels/node_2d.gd" id="10_7pb6i"]
 [ext_resource type="Texture2D" uid="uid://dgvttf7551uf0" path="res://assets/Tiny Swords Old (Update 010)/Factions/Goblins/Buildings/Wood_Tower/Wood_Tower_InConstruction.png" id="10_jyre1"]
-[ext_resource type="Script" uid="uid://bb8dr4ukmk0tj" path="res://scripts/components/hitbox_component.gd" id="10_rmjfq"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7pb6i"]
-size = Vector2(109, 92)
 
 [node name="Level" type="Node2D"]
 y_sort_enabled = true
@@ -45,18 +39,15 @@ tile_set = ExtResource("3_xfk5q")
 position = Vector2(703, 298)
 texture = ExtResource("4_qogh7")
 
+[node name="PlayerCharacter" parent="." instance=ExtResource("5_ouxo3")]
+position = Vector2(170, 243)
+
 [node name="EventManager" type="Node" parent="."]
 script = ExtResource("1_rmjfq")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 unique_name_in_owner = true
 anchor_mode = 0
-
-[node name="Player" parent="." instance=ExtResource("5_8iyoh")]
-position = Vector2(170, 326)
-
-[node name="Enemy_Skeleton" parent="." instance=ExtResource("6_icy5c")]
-position = Vector2(536, 156)
 
 [node name="Sheep" parent="." instance=ExtResource("6_mq31s")]
 position = Vector2(1006, 481)
@@ -70,6 +61,7 @@ scale = Vector2(1.435, 1.435)
 
 [node name="Sheep3" parent="." instance=ExtResource("6_mq31s")]
 position = Vector2(705, 262)
+scale = Vector2(-1, 1)
 
 [node name="TestAssets" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -81,16 +73,3 @@ texture = ExtResource("9_qhnmj")
 [node name="WoodTowerInConstruction" type="Sprite2D" parent="TestAssets"]
 position = Vector2(979, 529)
 texture = ExtResource("10_jyre1")
-
-[node name="Node2D" type="Node2D" parent="."]
-script = ExtResource("10_7pb6i")
-
-[node name="HitboxComponent" type="Area2D" parent="Node2D"]
-collision_layer = 4
-collision_mask = 8
-script = ExtResource("10_rmjfq")
-metadata/_custom_type_script = "uid://bb8dr4ukmk0tj"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/HitboxComponent"]
-position = Vector2(278, 297)
-shape = SubResource("RectangleShape2D_7pb6i")

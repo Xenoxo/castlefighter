@@ -14,7 +14,9 @@ func _ready() -> void:
 func init(character_node: CharacterBody2D) -> void:
 	for state in get_children():
 		state.fsm = self
-		state.animation_player = character_node.animated_sprite_2d		
+		#state.animation_player = character_node.animated_sprite_2d	
+		print(character_node)
+		state.animation_player = character_node.animation_player
 		states[state.name] = state
 		if current_state:
 			remove_child(state)

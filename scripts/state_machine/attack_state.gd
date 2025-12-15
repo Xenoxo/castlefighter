@@ -2,7 +2,7 @@ extends Node
 class_name AttackState
 
 var fsm: StateMachine
-var animation_player: AnimatedSprite2D
+var animation_player: AnimationPlayer
 
 #allows binding of dependency injection
 var on_enter: Callable

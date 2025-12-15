@@ -2,7 +2,7 @@ extends Node
 class_name RunState
 
 var fsm: StateMachine
-var animation_player: AnimatedSprite2D
+var animation_player: AnimationPlayer
 
 func enter():
 	if not animation_player:

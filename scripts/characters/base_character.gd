@@ -1,14 +1,16 @@
 extends CharacterBody2D
 class_name BaseCharacter
 
-@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
-@onready var hitbox_component: HitboxComponent = $HitboxComponent
+@onready var sprite_2d: Sprite2D = $Sprite2D
+@onready var animation_player: AnimationPlayer = $Sprite2D/AnimationPlayer
+
 @onready var health_component: HealthComponent = $HealthComponent
+@onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
+@onready var hitbox_component: HitboxComponent = $HitboxComponent
 
 @export var speed: float = 50.0
 
 func _ready() -> void:
-	# 1. Safety Check: Ensure the component exists
 	if not health_component:
 		push_error("HealthComponent missing on " + name)
 		return
@@ -30,8 +32,13 @@ func _on_death() -> void:
 func set_facing_direction(direction: Vector2) -> void:
 	if abs(direction.x) == 0:
 		return
-	animated_sprite_2d.flip_h = direction.x < 0.0
+	sprite_2d.flip_h = direction.x < 0.0
+	# old - remove once sprite works
+	#animated_sprite_2d.flip_h = direction.x < 0.0
 	
 	if hitbox_component:
-		var flip_scale = -1 if animated_sprite_2d.flip_h else 1
+		##old
+		#var flip_scale = -1 if animated_sprite_2d.flip_h else 1
+
+		var flip_scale = -1 if sprite_2d.flip_h else 1
 		hitbox_component.scale.x = flip_scale

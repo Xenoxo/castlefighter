@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://d25r26ym36sdp" path="res://scripts/tile_post_process.gd" id="3_ad8uc"]
 [ext_resource type="PackedScene" uid="uid://ccmk3lfj3dwea" path="res://scenes/characters/enemy_spear.tscn" id="3_bsp4l"]
 [ext_resource type="Texture2D" uid="uid://dclx46nc5x4n0" path="res://assets/Tiny Swords/Buildings/Blue Buildings/Tower.png" id="4_nd4bu"]
-[ext_resource type="PackedScene" uid="uid://b48maps0fwka0" path="res://scenes/player.tscn" id="5_nd4bu"]
+[ext_resource type="PackedScene" uid="uid://b48maps0fwka0" path="res://scenes/OLD_player.tscn" id="5_nd4bu"]
 
 [node name="TerrainTestScene" type="Node2D"]
 
